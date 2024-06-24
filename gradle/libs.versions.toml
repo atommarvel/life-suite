@@ -29,9 +29,8 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 appauth = "net.openid:appauth:0.11.1"
-junit = { group = "junit", name = "junit", version.ref = "junit" }
 flowredux-jvm = { module = "com.freeletics.flowredux:flowredux-jvm", version.ref = "flowredux" }
-flowredux-compose = { module = "com.freeletics.flowredux:compose", version.ref = "flowredux" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
