@@ -9,6 +9,7 @@ junitVersion = "1.1.5"
 kotlin = "1.9.0"
 lifecycleRuntimeKtx = "2.8.2"
 nav = "2.7.7"
+flowredux = "1.2.2"
 
 [libraries]
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
@@ -29,6 +30,8 @@ androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 appauth = "net.openid:appauth:0.11.1"
 junit = { group = "junit", name = "junit", version.ref = "junit" }
+flowredux-jvm = { module = "com.freeletics.flowredux:flowredux-jvm", version.ref = "flowredux" }
+flowredux-compose = { module = "com.freeletics.flowredux:compose", version.ref = "flowredux" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

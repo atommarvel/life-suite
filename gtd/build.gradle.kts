@@ -50,6 +50,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.flowredux.jvm)
+    implementation(libs.flowredux.compose)
     implementation(libs.appauth)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.navigation.compose)
