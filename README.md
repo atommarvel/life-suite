@@ -1,7 +1,6 @@
 # life-suite
 
 ## TODO
-- add hilt
 - setup jetpack nav to main screen
 - show login requirement on main screen
 - use appauth to login

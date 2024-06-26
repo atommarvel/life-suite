@@ -4,12 +4,13 @@ agp = "8.5.0"
 composeBom = "2024.06.00"
 coreKtx = "1.13.1"
 espressoCore = "3.5.1"
+flowredux = "1.2.2"
+hilt = "2.44"
 junit = "4.13.2"
 junitVersion = "1.1.5"
 kotlin = "1.9.0"
 lifecycleRuntimeKtx = "2.8.2"
 nav = "2.7.7"
-flowredux = "1.2.2"
 
 [libraries]
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
@@ -30,9 +31,11 @@ androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 appauth = "net.openid:appauth:0.11.1"
 flowredux-jvm = { module = "com.freeletics.flowredux:flowredux-jvm", version.ref = "flowredux" }
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
