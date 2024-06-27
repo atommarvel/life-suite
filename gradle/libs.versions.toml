@@ -10,7 +10,7 @@ junit = "4.13.2"
 junitVersion = "1.1.5"
 kotlin = "1.9.0"
 lifecycleRuntimeKtx = "2.8.2"
-nav = "2.7.7"
+nav = "2.8.0-beta04"
 
 [libraries]
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
@@ -21,6 +21,7 @@ androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "j
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "nav" }
+androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "nav" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "nav" }
 androidx-navigation-testing = { module = "androidx.navigation:navigation-testing", version.ref = "nav" }
 androidx-ui = { group = "androidx.compose.ui", name = "ui" }
@@ -34,8 +35,10 @@ flowredux-jvm = { module = "com.freeletics.flowredux:flowredux-jvm", version.ref
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
+kotlinx-serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

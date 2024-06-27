@@ -1,7 +1,6 @@
 # life-suite
 
 ## TODO
-- setup jetpack nav to main screen
 - show login requirement on main screen
 - use appauth to login
 - store tokens from login
