@@ -5,7 +5,7 @@ composeBom = "2024.06.00"
 coreKtx = "1.13.1"
 espressoCore = "3.5.1"
 flowredux = "1.2.2"
-hilt = "2.44"
+hilt = "2.49"
 junit = "4.13.2"
 junitVersion = "1.1.5"
 kotlin = "1.9.0"
@@ -16,6 +16,7 @@ nav = "2.8.0-beta04"
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-datastore-preferences = "androidx.datastore:datastore-preferences:1.1.1"
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
@@ -34,6 +35,7 @@ appauth = "net.openid:appauth:0.11.1"
 flowredux-jvm = { module = "com.freeletics.flowredux:flowredux-jvm", version.ref = "flowredux" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
+hilt-navigation-compose = "androidx.hilt:hilt-navigation-compose:1.2.0"
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 kotlinx-serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3"
 
