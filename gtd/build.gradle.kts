@@ -53,6 +53,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.timber)
+    implementation(libs.treessence)
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.kotlinx.serialization)
     implementation(libs.hilt.navigation.compose)

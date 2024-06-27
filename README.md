@@ -1,7 +1,6 @@
 # life-suite
 
 ## TODO
-- add Timber
 - use appauth to login
 - store tokens from login
 - show tasks from in-progress view
