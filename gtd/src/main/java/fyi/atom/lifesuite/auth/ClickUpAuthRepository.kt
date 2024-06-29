@@ -10,6 +10,8 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -40,15 +42,22 @@ class ClickUpAuthRepository @Inject constructor(
 ) {
     // TODO: inject an application scope coroutinescope
     private val scope = CoroutineScope(Dispatchers.Default)
-    private val dataStore = app.clickUpAuthDataStore
 
+    private val dataStore = app.clickUpAuthDataStore
     val authState: Flow<AuthState?> = dataStore.authStateFlow
+
+    private val _loginRequests = MutableSharedFlow<Unit>()
+    val loginRequests: Flow<Unit> = _loginRequests.asSharedFlow()
 
     fun setAuthState(authState: AuthState) = scope.launch {
         dataStore.edit { settings ->
             val json = Json.encodeToString(authState)
             settings[AUTH_STATE_KEY] = json
         }
+    }
+
+    fun launchLoginRequest() = scope.launch {
+        _loginRequests.emit(Unit)
     }
 }
 

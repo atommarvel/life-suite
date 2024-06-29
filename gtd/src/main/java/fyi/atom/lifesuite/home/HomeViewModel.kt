@@ -39,6 +39,19 @@ class HomeViewModel @Inject constructor(
                         }
                     }
                 }
+
+                inState<HomeScreenHod.LoginRequired> {
+                    collectWhileInState(clickUpAuthRepo.authState) { authState: AuthState?, state: State<HomeScreenHod.LoginRequired> ->
+                        if (authState != null) {
+                            state.override { HomeScreenHod.LoginCompleted(authState) }
+                        } else {
+                            state.noChange()
+                        }
+                    }
+                    onActionEffect<HomeScreenAction.OnLoginClick> { _, _ ->
+                        clickUpAuthRepo.launchLoginRequest()
+                    }
+                }
             }
         }
     }

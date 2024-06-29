@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -5,6 +8,25 @@ plugins {
     alias(libs.plugins.kotlinx.serialization)
     id("kotlin-kapt")
 }
+
+class SecretsFetcher {
+    private val apiKeyProperties = Properties().apply {
+        rootProject.file("secrets.properties")
+            .takeIf { it.exists() }
+            ?.let {
+                load(FileInputStream(it))
+            }
+    }
+
+    operator fun get(key: String): String = apiKeyProperties[key]?.toString() ?: System.getenv(key)
+
+    val clickUpClientId: String
+        get() = this["clickup.client.id"]
+
+    val clickUpClientSecret: String
+        get() = this["clickup.client.secret"]
+}
+
 
 android {
     namespace = "fyi.atom.lifesuite"
@@ -21,6 +43,9 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        val secretsFetcher = SecretsFetcher()
+        buildConfigField("String", "CLICKUP_CLIENT_ID", "\"${secretsFetcher.clickUpClientId}\"")
+        buildConfigField("String", "CLICKUP_CLIENT_SECRET", "\"${secretsFetcher.clickUpClientSecret}\"")
     }
 
     buildTypes {
@@ -41,6 +66,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -61,7 +87,7 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
     implementation(libs.flowredux.jvm)
-//    implementation(libs.appauth)
+    implementation(libs.appauth)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.navigation.fragment.ktx)
