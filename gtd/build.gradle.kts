@@ -10,23 +10,29 @@ plugins {
 }
 
 class SecretsFetcher {
-    private val apiKeyProperties = Properties().apply {
-        rootProject.file("secrets.properties")
-            .takeIf { it.exists() }
-            ?.let {
-                load(FileInputStream(it))
-            }
+    private val secretProperties: Properties by lazy {
+        Properties().apply {
+            rootProject.file("secrets.properties")
+                .takeIf { it.exists() }
+                ?.let {
+                    load(FileInputStream(it))
+                }
+        }
     }
 
-    operator fun get(key: String): String = apiKeyProperties[key]?.toString() ?: System.getenv(key)
+    operator fun get(key: String): String = secretProperties[key]?.toString() ?: System.getenv(key)
 
     val clickUpClientId: String
         get() = this["clickup.client.id"]
-
     val clickUpClientSecret: String
         get() = this["clickup.client.secret"]
+    val keystoreKeyAlias: String
+        get() = this["app.keystore.keyAlias"]
+    val keystoreKeyPassword: String
+        get() = this["app.keystore.keyPassword"]
+    val keystoreStorePassword: String
+        get() = this["app.keystore.storePassword"]
 }
-
 
 android {
     namespace = "fyi.atom.lifesuite"
@@ -48,7 +54,20 @@ android {
         buildConfigField("String", "CLICKUP_CLIENT_SECRET", "\"${secretsFetcher.clickUpClientSecret}\"")
     }
 
+    signingConfigs {
+        getByName("debug") {
+            val secretsFetcher = SecretsFetcher()
+            keyAlias = secretsFetcher.keystoreKeyAlias
+            keyPassword = secretsFetcher.keystoreKeyPassword
+            storeFile = rootProject.file("life-suite.keystore")
+            storePassword = secretsFetcher.keystoreStorePassword
+        }
+    }
+
     buildTypes {
+        debug {
+            signingConfig = signingConfigs.getByName("debug")
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
