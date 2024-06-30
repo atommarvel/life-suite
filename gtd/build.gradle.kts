@@ -98,6 +98,10 @@ android {
 }
 
 dependencies {
+    implementation(libs.ktor.core)
+    implementation(libs.ktor.android)
+    implementation(libs.ktor.content.negotiation)
+    implementation(libs.ktor.serialization)
     implementation(libs.timber)
     implementation(libs.treessence)
     implementation(libs.androidx.datastore.preferences)

@@ -36,6 +36,11 @@ fun HomeScreen(
             HomeScreenHod.LoginRequired -> Button(onClick = { dispatch(HomeScreenAction.OnLoginClick) }) {
                 Text(text = "Login to ClickUp")
             }
+            is HomeScreenHod.Tasks -> Column {
+                hod.titles.forEach {
+                    Text(it)
+                }
+            }
         }
     }
 }

@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.freeletics.flowredux.dsl.FlowReduxStateMachine
 import com.freeletics.flowredux.dsl.State
 import dagger.hilt.android.lifecycle.HiltViewModel
+import fyi.atom.lifesuite.api.FetchTasksInViewUseCase
 import fyi.atom.lifesuite.auth.AuthState
 import fyi.atom.lifesuite.auth.ClickUpAuthRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -15,7 +16,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     // TODO: instead just have a repo to get the clickup data
-    private val clickUpAuthRepo: ClickUpAuthRepository
+    private val clickUpAuthRepo: ClickUpAuthRepository,
+    private val fetchTasksInViewUseCase: FetchTasksInViewUseCase,
 ) : ViewModel() {
     private val stateMachine = HomeStateMachine()
     val state: Flow<HomeScreenHod> = stateMachine.state
@@ -52,6 +54,13 @@ class HomeViewModel @Inject constructor(
                         clickUpAuthRepo.launchLoginRequest()
                     }
                 }
+
+                inState<HomeScreenHod.LoginCompleted> {
+                    onEnter { state ->
+                        val titles = fetchTasksInViewUseCase.invoke("a45kv-514").tasks?.map { it.name }.orEmpty()
+                        state.override { HomeScreenHod.Tasks(titles) }
+                    }
+                }
             }
         }
     }
@@ -61,6 +70,7 @@ sealed interface HomeScreenHod {
     data object Loading : HomeScreenHod
     data object LoginRequired : HomeScreenHod
     data class LoginCompleted(val authState: AuthState) : HomeScreenHod
+    data class Tasks(val titles: List<String>): HomeScreenHod
 }
 
 sealed interface HomeScreenAction {
