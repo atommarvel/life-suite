@@ -20,6 +20,9 @@ import net.openid.appauth.ClientSecretBasic
 import timber.log.Timber
 import javax.inject.Inject
 
+/**
+ * https://clickup.com/api/developer-portal/authentication#step-1-create-an-oauth-app
+ */
 @ActivityScoped
 class LogIntoClickUpLauncher @Inject constructor(
     private val activity: ComponentActivity,

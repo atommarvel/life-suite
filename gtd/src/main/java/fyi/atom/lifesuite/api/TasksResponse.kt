@@ -14,6 +14,7 @@ data class TasksResponse(
 )
 
 // TODO: commented out fields
+// TODO: dates with kotlinx.datetime
 @Keep
 @Serializable
 data class Task(
