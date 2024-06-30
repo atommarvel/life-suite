@@ -32,7 +32,6 @@ fun HomeScreen(
     ) {
         when(hod) {
             HomeScreenHod.Loading -> CircularProgressIndicator()
-            is HomeScreenHod.LoginCompleted -> Text("Login complete!")
             HomeScreenHod.LoginRequired -> Button(onClick = { dispatch(HomeScreenAction.OnLoginClick) }) {
                 Text(text = "Login to ClickUp")
             }

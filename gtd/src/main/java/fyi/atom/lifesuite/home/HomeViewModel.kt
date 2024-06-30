@@ -37,7 +37,9 @@ class HomeViewModel @Inject constructor(
                         if (authState == null) {
                             state.override { HomeScreenHod.LoginRequired }
                         } else {
-                            state.override { HomeScreenHod.LoginCompleted(authState) }
+                            // TODO: don't hard-code view id
+                            val titles = fetchTasksInViewUseCase.invoke("a45kv-514").tasks?.map { it.name }.orEmpty()
+                            state.override { HomeScreenHod.Tasks(titles) }
                         }
                     }
                 }
@@ -45,20 +47,15 @@ class HomeViewModel @Inject constructor(
                 inState<HomeScreenHod.LoginRequired> {
                     collectWhileInState(clickUpAuthRepo.authState) { authState: AuthState?, state: State<HomeScreenHod.LoginRequired> ->
                         if (authState != null) {
-                            state.override { HomeScreenHod.LoginCompleted(authState) }
+                            // TODO: reduce repetition
+                            val titles = fetchTasksInViewUseCase.invoke("a45kv-514").tasks?.map { it.name }.orEmpty()
+                            state.override { HomeScreenHod.Tasks(titles) }
                         } else {
                             state.noChange()
                         }
                     }
                     onActionEffect<HomeScreenAction.OnLoginClick> { _, _ ->
                         clickUpAuthRepo.launchLoginRequest()
-                    }
-                }
-
-                inState<HomeScreenHod.LoginCompleted> {
-                    onEnter { state ->
-                        val titles = fetchTasksInViewUseCase.invoke("a45kv-514").tasks?.map { it.name }.orEmpty()
-                        state.override { HomeScreenHod.Tasks(titles) }
                     }
                 }
             }
@@ -69,7 +66,6 @@ class HomeViewModel @Inject constructor(
 sealed interface HomeScreenHod {
     data object Loading : HomeScreenHod
     data object LoginRequired : HomeScreenHod
-    data class LoginCompleted(val authState: AuthState) : HomeScreenHod
     data class Tasks(val titles: List<String>): HomeScreenHod
 }
 

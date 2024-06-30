@@ -1,8 +1,14 @@
 # life-suite
 
 ## TODO
-- show tasks from in-progress view
+- cleanup how authenticated clickup requests are done
+- fix TODOs in code
 - setup jetpack glance
 - get basic widget showing
 - render tasks in widget
 - use workmanager to sync tasks every so often
+- add quick add task intake feature
+- add google keep integration
+- feature: import google keep tasks to clickup
+- add raindrop integration
+- feature: import raindrop inbox tagged content to clickup
