@@ -1,4 +1,4 @@
-package fyi.atom.lifesuite.api
+package fyi.atom.lifesuite.model.server.clickup
 
 
 import kotlinx.serialization.SerialName

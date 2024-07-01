@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.freeletics.flowredux.dsl.FlowReduxStateMachine
 import com.freeletics.flowredux.dsl.State
 import dagger.hilt.android.lifecycle.HiltViewModel
-import fyi.atom.lifesuite.api.FetchTasksInViewUseCase
+import fyi.atom.lifesuite.api.clickup.FetchTasksInViewUseCase
 import fyi.atom.lifesuite.auth.AuthState
 import fyi.atom.lifesuite.auth.ClickUpAuthRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -38,7 +38,7 @@ class HomeViewModel @Inject constructor(
                             state.override { HomeScreenHod.LoginRequired }
                         } else {
                             // TODO: don't hard-code view id
-                            val titles = fetchTasksInViewUseCase.invoke("a45kv-514").tasks?.map { it.name }.orEmpty()
+                            val titles = fetchTasksInViewUseCase("a45kv-514").tasks?.map { it.name }.orEmpty()
                             state.override { HomeScreenHod.Tasks(titles) }
                         }
                     }
@@ -48,7 +48,7 @@ class HomeViewModel @Inject constructor(
                     collectWhileInState(clickUpAuthRepo.authState) { authState: AuthState?, state: State<HomeScreenHod.LoginRequired> ->
                         if (authState != null) {
                             // TODO: reduce repetition
-                            val titles = fetchTasksInViewUseCase.invoke("a45kv-514").tasks?.map { it.name }.orEmpty()
+                            val titles = fetchTasksInViewUseCase("a45kv-514").tasks?.map { it.name }.orEmpty()
                             state.override { HomeScreenHod.Tasks(titles) }
                         } else {
                             state.noChange()

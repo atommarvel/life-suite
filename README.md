@@ -1,7 +1,6 @@
 # life-suite
 
 ## TODO
-- cleanup how authenticated clickup requests are done
 - fix TODOs in code
 - setup jetpack glance
 - get basic widget showing
