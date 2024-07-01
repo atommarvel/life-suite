@@ -13,15 +13,11 @@ import javax.inject.Inject
 class FetchTasksInViewUseCase @Inject constructor(
     private val client: ClickUpHttpClient
 ) {
-    suspend operator fun invoke(viewId: String): TasksResponse {
-        val response: HttpResponse = client.get("view/${viewId}/task") {
+    suspend operator fun invoke(viewId: String): TasksResponse =
+        client.get("view/${viewId}/task") {
             url {
                 // TODO: pagination
                 parameters.append("page", "0")
             }
-        }
-        // TODO: httpclient logging
-        Timber.d(response.bodyAsText())
-        return response.body()
-    }
+        }.body()
 }

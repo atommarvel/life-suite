@@ -40,9 +40,10 @@ hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hil
 hilt-navigation-compose = "androidx.hilt:hilt-navigation-compose:1.2.0"
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 kotlinx-serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3"
-ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
+ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 ktor-serialization = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 timber = "com.jakewharton.timber:timber:5.0.1"
 treessence = "com.github.bastienpaulfr:Treessence:1.1.2"

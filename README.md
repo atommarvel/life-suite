@@ -2,6 +2,7 @@
 
 ## TODO
 - fix TODOs in code
+- ktlint / detekt
 - setup jetpack glance
 - get basic widget showing
 - render tasks in widget
