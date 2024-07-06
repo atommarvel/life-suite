@@ -6,12 +6,15 @@ import com.freeletics.flowredux.dsl.ChangedState
 import com.freeletics.flowredux.dsl.FlowReduxStateMachine
 import com.freeletics.flowredux.dsl.State
 import dagger.hilt.android.lifecycle.HiltViewModel
+import fyi.atom.lifesuite.R
 import fyi.atom.lifesuite.api.clickup.FetchTasksInViewUseCase
 import fyi.atom.lifesuite.auth.AuthState
 import fyi.atom.lifesuite.auth.ClickUpAuthRepository
 import fyi.atom.lifesuite.dev.logEach
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,6 +25,9 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
     private val stateMachine = HomeStateMachine()
     val state: Flow<HomeScreenHod> = stateMachine.state.logEach("HomeViewModel.state")
+
+    private val _sideEffects = MutableSharedFlow<HomeScreenSideEffect?>()
+    val sideEffects: Flow<HomeScreenSideEffect?> = _sideEffects.asSharedFlow()
 
     fun dispatch(action: HomeScreenAction) {
         viewModelScope.launch {
@@ -38,11 +44,23 @@ class HomeViewModel @Inject constructor(
                 }
 
                 inState<HomeScreenHod.LoginRequired> {
-                    collectWhileInState(clickUpAuthRepo.authState) { authState: AuthState?, state ->
+                    collectWhileInState(clickUpAuthRepo.authState) { authState, state ->
                         if (authState != null) state.override { HomeScreenHod.Loading } else state.noChange()
                     }
-                    onActionEffect<HomeScreenAction.OnLoginClick> { _, _ ->
-                        clickUpAuthRepo.launchLoginRequest()
+                    on<HomeScreenAction.OnLoginClick> { _, state ->
+                        state.override { HomeScreenHod.LoggingIn }
+                    }
+                }
+
+                inState<HomeScreenHod.LoggingIn> {
+                    onEnterEffect { clickUpAuthRepo.launchLoginRequest() }
+                    collectWhileInState(clickUpAuthRepo.authState) { authState, state ->
+                        if (authState != null) {
+                            emitLoginSuccessSnackbar()
+                            state.override { HomeScreenHod.Loading }
+                        } else {
+                            state.noChange()
+                        }
                     }
                 }
             }
@@ -58,15 +76,24 @@ class HomeViewModel @Inject constructor(
             } else {
                 state.override { HomeScreenHod.LoginRequired }
             }
+
+        private suspend fun emitLoginSuccessSnackbar() {
+            _sideEffects.emit(HomeScreenSideEffect.Snackbar(R.string.login_success))
+        }
     }
 }
 
 sealed interface HomeScreenHod {
     data object Loading : HomeScreenHod
     data object LoginRequired : HomeScreenHod
+    data object LoggingIn: HomeScreenHod
     data class Tasks(val titles: List<String>) : HomeScreenHod
 }
 
 sealed interface HomeScreenAction {
     data object OnLoginClick : HomeScreenAction
+}
+
+sealed interface HomeScreenSideEffect {
+    data class Snackbar(val msgRes: Int): HomeScreenSideEffect
 }
