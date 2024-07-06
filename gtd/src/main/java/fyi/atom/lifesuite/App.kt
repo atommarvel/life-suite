@@ -19,8 +19,6 @@ class App : Application() {
     private fun setupLogging() {
         startTimber {
             debugTree()
-            // TODO setup permissions for writing the file?
-//            fileTree {}
         }
     }
 }

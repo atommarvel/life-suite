@@ -43,7 +43,6 @@ data class Task(
 //    @SerialName("group_assignees")
 //    val groupAssignees: List<Any?>? = null,
     val id: String? = null,
-    // TODO
 //    @SerialName("linked_tasks")
 //    val linkedTasks: List<Any?>? = null,
     val list: ListInfo? = null,
