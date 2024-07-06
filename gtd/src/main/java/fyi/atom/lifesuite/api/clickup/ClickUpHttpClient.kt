@@ -18,7 +18,6 @@ class ClickUpHttpClient @Inject constructor(
         endpoint: String,
         block: HttpRequestBuilder.() -> Unit = {}
     ): HttpResponse {
-        // TODO: decide on how to deal with lack of access token
         val token = clickUpAuthRepository.authState.first()?.accessToken.orEmpty()
         return client.get(BASE_URL) {
             url {

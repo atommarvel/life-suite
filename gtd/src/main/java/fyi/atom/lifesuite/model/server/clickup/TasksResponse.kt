@@ -20,12 +20,7 @@ data class TasksResponse(
 data class Task(
     val archived: Boolean? = null,
     val assignees: List<Assignee>? = null,
-//    val checklists: List<Any?>? = null,
     val creator: Creator? = null,
-//    @SerialName("custom_fields")
-//    val customFields: List<Any?>? = null,
-//    @SerialName("custom_id")
-//    val customId: Any? = null,
     @SerialName("custom_item_id")
     val customItemId: Int? = null,
     @SerialName("date_closed")
@@ -36,23 +31,16 @@ data class Task(
     val dateDone: String? = null,
     @SerialName("date_updated")
     val dateUpdated: String? = null,
-//    val dependencies: List<Any?>? = null,
     @SerialName("due_date")
     val dueDate: String? = null,
     val folder: Folder? = null,
-//    @SerialName("group_assignees")
-//    val groupAssignees: List<Any?>? = null,
     val id: String? = null,
-//    @SerialName("linked_tasks")
-//    val linkedTasks: List<Any?>? = null,
     val list: ListInfo? = null,
     val locations: List<Location?>? = null,
     val name: String,
     val orderindex: String? = null,
-//    val parent: Any? = null,
     @SerialName("permission_level")
     val permissionLevel: String? = null,
-//    val points: Any? = null,
     val priority: Priority? = null,
     val project: Project? = null,
     val sharing: Sharing? = null,
@@ -65,10 +53,7 @@ data class Task(
     val tags: List<Tag?>? = null,
     @SerialName("team_id")
     val teamId: String? = null,
-//    @SerialName("time_estimate")
-//    val timeEstimate: Any? = null,
     val url: String? = null,
-//    val watchers: List<Any?>? = null
 ) {
     @Keep
     @Serializable
