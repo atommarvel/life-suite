@@ -8,8 +8,9 @@ import io.ktor.client.request.headers
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.appendPathSegments
 import kotlinx.coroutines.flow.first
+import javax.inject.Inject
 
-class ClickUpHttpClient(
+class ClickUpHttpClient @Inject constructor(
     private val client: HttpClient,
     private val clickUpAuthRepository: ClickUpAuthRepository
 ) {

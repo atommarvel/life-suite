@@ -1,4 +1,4 @@
-package fyi.atom.lifesuite.di
+package fyi.atom.lifesuite.di.module.activity
 
 import android.app.Activity
 import androidx.activity.ComponentActivity

@@ -28,7 +28,6 @@ class LogIntoClickUpLauncher @Inject constructor(
     private val activity: ComponentActivity,
     private val clickUpAuthRepository: ClickUpAuthRepository
 ) {
-    // TODO: include client id
     private val authEndpoint = "https://app.clickup.com/api"
     private val tokenEndpoint = "https://api.clickup.com/api/v2/oauth/token"
     private val config = AuthorizationServiceConfiguration(authEndpoint.toUri(), tokenEndpoint.toUri())

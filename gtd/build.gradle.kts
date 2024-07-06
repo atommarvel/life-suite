@@ -109,6 +109,7 @@ dependencies {
     implementation(libs.kotlinx.serialization)
     implementation(libs.hilt.navigation.compose)
     implementation(libs.hilt.android)
+    implementation(libs.androidx.lifecycle.process)
     kapt(libs.hilt.compiler)
     implementation(libs.flowredux.jvm)
     implementation(libs.appauth)
