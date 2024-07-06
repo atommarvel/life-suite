@@ -13,11 +13,15 @@ import javax.inject.Inject
 class FetchTasksInViewUseCase @Inject constructor(
     private val client: ClickUpHttpClient
 ) {
-    suspend operator fun invoke(viewId: String): TasksResponse =
+    suspend operator fun invoke(viewId: String = ACTIVE_TASKS_VIEW_ID): TasksResponse =
         client.get("view/${viewId}/task") {
             url {
                 // TODO: pagination
                 parameters.append("page", "0")
             }
         }.body()
+
+    companion object {
+        private const val ACTIVE_TASKS_VIEW_ID = "a45kv-514"
+    }
 }
