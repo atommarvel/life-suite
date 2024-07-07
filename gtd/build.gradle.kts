@@ -24,7 +24,7 @@ class SecretsFetcher {
         }
     }
 
-    private operator fun get(key: String): String = secretProperties[key]?.toString() ?: System.getenv(key)
+    private operator fun get(key: String): String = secretProperties[key]?.toString() ?: requireNotNull(System.getenv(key))
 
     val clickUpClientId: String
         get() = this["CLICKUP_CLIENT_ID"]
