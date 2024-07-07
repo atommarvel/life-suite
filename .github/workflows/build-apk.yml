@@ -3,7 +3,7 @@ name: Build APK
 on:
   workflow_call:
 
-job:
+jobs:
   build-apk:
     runs-on: ubuntu-latest
     environment: main
