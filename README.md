@@ -1,7 +1,6 @@
 # life-suite
 
 ## TODO
-- set up dependabot
 - setup jetpack glance
 - get basic widget showing
 - render tasks in widget

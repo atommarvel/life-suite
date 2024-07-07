@@ -1,10 +1,10 @@
-name: gtd-fishfood
+name: PR check
 
 on:
-  push:
+  pull_request:
     branches: [ main ]
 
 jobs:
-  build:
+  verify-apk-compiles:
     uses: ./.github/workflows/build-apk.yml
     secrets: inherit
