@@ -24,79 +24,85 @@ import javax.inject.Inject
  * https://clickup.com/api/developer-portal/authentication#step-1-create-an-oauth-app
  */
 @ActivityScoped
-class LogIntoClickUpLauncher @Inject constructor(
-    private val activity: ComponentActivity,
-    private val clickUpAuthRepository: ClickUpAuthRepository
-) {
-    private val authEndpoint = "https://app.clickup.com/api"
-    private val tokenEndpoint = "https://api.clickup.com/api/v2/oauth/token"
-    private val config = AuthorizationServiceConfiguration(authEndpoint.toUri(), tokenEndpoint.toUri())
-    private var service: AuthorizationService? = null
+class LogIntoClickUpLauncher
+    @Inject
+    constructor(
+        private val activity: ComponentActivity,
+        private val clickUpAuthRepository: ClickUpAuthRepository
+    ) {
+        private val authEndpoint = "https://app.clickup.com/api"
+        private val tokenEndpoint = "https://api.clickup.com/api/v2/oauth/token"
+        private val config = AuthorizationServiceConfiguration(authEndpoint.toUri(), tokenEndpoint.toUri())
+        private var service: AuthorizationService? = null
 
-    private val launcher = activity.registerForActivityResult(StartActivityForResult()) { intent ->
-        if (intent.resultCode == RESULT_OK) {
-            val data = requireNotNull(intent.data)
-            val ex = AuthorizationException.fromIntent(data)
-            val result = AuthorizationResponse.fromIntent(data)
+        private val launcher =
+            activity.registerForActivityResult(StartActivityForResult()) { intent ->
+                if (intent.resultCode == RESULT_OK) {
+                    val data = requireNotNull(intent.data)
+                    val ex = AuthorizationException.fromIntent(data)
+                    val result = AuthorizationResponse.fromIntent(data)
 
-            if (ex != null) {
-                Timber.e(ex)
-            } else {
-                val secret = ClientSecretBasic(BuildConfig.CLICKUP_CLIENT_SECRET)
-                val tokenRequest = requireNotNull(result?.createTokenExchangeRequest())
-                service?.performTokenRequest(tokenRequest, secret) { res, exception ->
-                    if (exception != null) {
-                        Timber.e(exception)
+                    if (ex != null) {
+                        Timber.e(ex)
                     } else {
-                        Timber.d(res?.jsonSerializeString())
-                        val authState = AuthState(
-                            accessToken = requireNotNull(res?.accessToken)
-                        )
-                        clickUpAuthRepository.setAuthState(authState)
+                        val secret = ClientSecretBasic(BuildConfig.CLICKUP_CLIENT_SECRET)
+                        val tokenRequest = requireNotNull(result?.createTokenExchangeRequest())
+                        service?.performTokenRequest(tokenRequest, secret) { res, exception ->
+                            if (exception != null) {
+                                Timber.e(exception)
+                            } else {
+                                Timber.d(res?.jsonSerializeString())
+                                val authState =
+                                    AuthState(
+                                        accessToken = requireNotNull(res?.accessToken)
+                                    )
+                                clickUpAuthRepository.setAuthState(authState)
+                            }
+                        }
+                    }
+                }
+            }
+
+        init {
+            initServiceInLifecycle()
+            listenForLoginRequests()
+        }
+
+        private fun initServiceInLifecycle() {
+            activity.lifecycle.coroutineScope.launch {
+                activity.lifecycle.repeatOnLifecycle(Lifecycle.State.CREATED) {
+                    try {
+                        service = AuthorizationService(activity)
+                        awaitCancellation()
+                    } finally {
+                        service?.dispose()
+                        service = null
                     }
                 }
             }
         }
-    }
 
-    init {
-        initServiceInLifecycle()
-        listenForLoginRequests()
-    }
-
-    private fun initServiceInLifecycle() {
-        activity.lifecycle.coroutineScope.launch {
-            activity.lifecycle.repeatOnLifecycle(Lifecycle.State.CREATED) {
-                try {
-                    service = AuthorizationService(activity)
-                    awaitCancellation()
-                } finally {
-                    service?.dispose()
-                    service = null
+        private fun listenForLoginRequests() {
+            activity.lifecycle.coroutineScope.launch {
+                activity.lifecycle.repeatOnLifecycle(Lifecycle.State.CREATED) {
+                    clickUpAuthRepository.loginRequests.collect {
+                        requestLogin()
+                    }
                 }
             }
         }
-    }
 
-    private fun listenForLoginRequests() {
-        activity.lifecycle.coroutineScope.launch {
-            activity.lifecycle.repeatOnLifecycle(Lifecycle.State.CREATED) {
-                clickUpAuthRepository.loginRequests.collect {
-                    requestLogin()
-                }
+        private fun requestLogin() {
+            val req: AuthorizationRequest =
+                AuthorizationRequest
+                    .Builder(
+                        config,
+                        BuildConfig.CLICKUP_CLIENT_ID,
+                        AuthorizationRequest.ResponseMode.QUERY,
+                        "https://atom.fyi/lifesuite/oauth-redirect".toUri()
+                    ).build()
+            service?.getAuthorizationRequestIntent(req)?.let {
+                launcher.launch(it)
             }
         }
     }
-
-    private fun requestLogin() {
-        val req: AuthorizationRequest = AuthorizationRequest.Builder(
-            config,
-            BuildConfig.CLICKUP_CLIENT_ID,
-            AuthorizationRequest.ResponseMode.QUERY,
-            "https://atom.fyi/lifesuite/oauth-redirect".toUri()
-        ).build()
-        service?.getAuthorizationRequestIntent(req)?.let {
-            launcher.launch(it)
-        }
-    }
-}

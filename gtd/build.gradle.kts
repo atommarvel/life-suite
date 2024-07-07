@@ -1,3 +1,4 @@
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 import java.io.FileInputStream
 import java.util.Properties
 
@@ -5,6 +6,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.ktlint)
     alias(libs.plugins.kotlinx.serialization)
     id("kotlin-kapt")
 }
@@ -12,7 +14,8 @@ plugins {
 class SecretsFetcher {
     private val secretProperties: Properties by lazy {
         Properties().apply {
-            rootProject.file("secrets.properties")
+            rootProject
+                .file("secrets.properties")
                 .takeIf { it.exists() }
                 ?.let {
                     load(FileInputStream(it))
@@ -136,4 +139,25 @@ dependencies {
 
 kapt {
     correctErrorTypes = true
+}
+
+configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
+    version.set("1.3.1")
+    debug.set(true)
+    verbose.set(true)
+    android.set(false)
+    outputToConsole.set(true)
+    outputColorName.set("RED")
+//    baseline.set(file("my-project-ktlint-baseline.xml"))
+    reporters {
+        reporter(ReporterType.PLAIN)
+        reporter(ReporterType.HTML)
+    }
+    kotlinScriptAdditionalPaths {
+        include(fileTree("scripts/"))
+    }
+    filter {
+        exclude("**/generated/**")
+        include("**/kotlin/**")
+    }
 }

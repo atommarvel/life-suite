@@ -10,27 +10,33 @@ import io.ktor.http.appendPathSegments
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
-class ClickUpHttpClient @Inject constructor(
-    private val client: HttpClient,
-    private val clickUpAuthRepository: ClickUpAuthRepository
-) {
-    suspend fun get(
-        endpoint: String,
-        block: HttpRequestBuilder.() -> Unit = {}
-    ): HttpResponse {
-        val token = clickUpAuthRepository.authState.first()?.accessToken.orEmpty()
-        return client.get(BASE_URL) {
-            url {
-                appendPathSegments(endpoint)
+class ClickUpHttpClient
+    @Inject
+    constructor(
+        private val client: HttpClient,
+        private val clickUpAuthRepository: ClickUpAuthRepository
+    ) {
+        suspend fun get(
+            endpoint: String,
+            block: HttpRequestBuilder.() -> Unit = {}
+        ): HttpResponse {
+            val token =
+                clickUpAuthRepository.authState
+                    .first()
+                    ?.accessToken
+                    .orEmpty()
+            return client.get(BASE_URL) {
+                url {
+                    appendPathSegments(endpoint)
+                }
+                headers {
+                    append("Authorization", "Bearer $token")
+                }
+                block()
             }
-            headers {
-                append("Authorization", "Bearer $token")
-            }
-            block()
+        }
+
+        companion object {
+            private const val BASE_URL = "https://api.clickup.com/api/v2/"
         }
     }
-
-    companion object {
-        private const val BASE_URL = "https://api.clickup.com/api/v2/"
-    }
-}

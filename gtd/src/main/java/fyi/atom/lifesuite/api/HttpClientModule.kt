@@ -30,11 +30,12 @@ object HttpClientModule {
                 )
             }
             install(Logging) {
-                logger = object :  Logger {
-                    override fun log(message: String) {
-                        Timber.i(message)
+                logger =
+                    object : Logger {
+                        override fun log(message: String) {
+                            Timber.i(message)
+                        }
                     }
-                }
                 level = LogLevel.BODY
             }
         }

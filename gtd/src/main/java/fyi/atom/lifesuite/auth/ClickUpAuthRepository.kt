@@ -21,39 +21,45 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ClickUpAuthRepository @Inject constructor(
-    @SingletonLifecycle
-    private val scope: CoroutineScope,
-    @ClickUpAuthDataStore
-    private val dataStore: AuthDataStore
-) {
-    val authState: Flow<AuthState?> = dataStore.authStateFlow
+class ClickUpAuthRepository
+    @Inject
+    constructor(
+        @SingletonLifecycle
+        private val scope: CoroutineScope,
+        @ClickUpAuthDataStore
+        private val dataStore: AuthDataStore
+    ) {
+        val authState: Flow<AuthState?> = dataStore.authStateFlow
 
-    private val _loginRequests = MutableSharedFlow<Unit>()
-    val loginRequests: Flow<Unit> = _loginRequests.asSharedFlow()
+        private val _loginRequests = MutableSharedFlow<Unit>()
+        val loginRequests: Flow<Unit> = _loginRequests.asSharedFlow()
 
-    fun setAuthState(authState: AuthState) = scope.launch {
-        dataStore.edit { settings ->
-            val json = Json.encodeToString(authState)
-            settings.authState = json
-        }
+        fun setAuthState(authState: AuthState) =
+            scope.launch {
+                dataStore.edit { settings ->
+                    val json = Json.encodeToString(authState)
+                    settings.authState = json
+                }
+            }
+
+        fun launchLoginRequest() =
+            scope.launch {
+                _loginRequests.emit(Unit)
+            }
     }
-
-    fun launchLoginRequest() = scope.launch {
-        _loginRequests.emit(Unit)
-    }
-}
 
 private val DataStore<Preferences>.authStateFlow: Flow<AuthState?>
-    get() = data.map { preferences ->
-        preferences.authState?.let { json ->
-            try {
-                Json.decodeFromString<AuthState>(json)
-            } catch (e: Exception) {
-                null
-            }
-        }
-    }.distinctUntilChanged()
+    get() =
+        data
+            .map { preferences ->
+                preferences.authState?.let { json ->
+                    try {
+                        Json.decodeFromString<AuthState>(json)
+                    } catch (e: Exception) {
+                        null
+                    }
+                }
+            }.distinctUntilChanged()
 
 private val Preferences.authState: String?
     get() = get(AUTH_STATE_KEY)
@@ -67,5 +73,3 @@ private var MutablePreferences.authState: String?
             remove(AUTH_STATE_KEY)
         }
     }
-
-

@@ -1,9 +1,8 @@
 package fyi.atom.lifesuite.model.server.clickup
 
-
+import androidx.annotation.Keep
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import androidx.annotation.Keep
 
 @Keep
 @Serializable
@@ -53,7 +52,7 @@ data class Task(
     val tags: List<Tag?>? = null,
     @SerialName("team_id")
     val teamId: String? = null,
-    val url: String? = null,
+    val url: String? = null
 ) {
     @Keep
     @Serializable
