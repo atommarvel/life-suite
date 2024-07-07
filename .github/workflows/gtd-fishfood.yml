@@ -10,20 +10,8 @@ jobs:
     environment: main
     steps:
       - uses: actions/checkout@v2
-      - name: Set up JDK
-        uses: actions/setup-java@v1
-        with:
-          java-version: '17.0.10'
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-      - name: Build with Gradle
-        env:
-          APP_KEYSTORE_KEY_ALIAS: ${{ secrets.APP_KEYSTORE_KEY_ALIAS }}
-          APP_KEYSTORE_KEY_PASSWORD: ${{ secrets.APP_KEYSTORE_KEY_PASSWORD }}
-          APP_KEYSTORE_STORE_PASSWORD: ${{ secrets.APP_KEYSTORE_STORE_PASSWORD }}
-          CLICKUP_CLIENT_SECRET: ${{ secrets.CLICKUP_CLIENT_SECRET }}
-          CLICKUP_CLIENT_ID: ${{ secrets.CLICKUP_CLIENT_ID }}
-        run: ./gradlew :gtd:assembleDebug
+      - name: Build apk
+        uses: .github/actions/build-apk
       - name: Upload apk
         uses: actions/upload-artifact@v4.3.3
         with:
