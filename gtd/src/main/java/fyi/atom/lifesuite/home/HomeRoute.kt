@@ -31,9 +31,8 @@ private fun OnSideEffect(sideEffect: HomeScreenSideEffect?) {
     if (sideEffect != null) {
         val context = LocalContext.current
         when (sideEffect) {
-            is HomeScreenSideEffect.Snackbar -> {
+            is HomeScreenSideEffect.Snackbar ->
                 Toast.makeText(context, sideEffect.msgRes, Toast.LENGTH_SHORT).show()
-            }
         }
     }
 }

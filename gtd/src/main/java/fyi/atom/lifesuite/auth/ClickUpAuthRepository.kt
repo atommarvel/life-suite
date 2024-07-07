@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -56,6 +57,7 @@ private val DataStore<Preferences>.authStateFlow: Flow<AuthState?>
                     try {
                         Json.decodeFromString<AuthState>(json)
                     } catch (e: Exception) {
+                        Timber.e(e)
                         null
                     }
                 }

@@ -12,7 +12,6 @@ data class TasksResponse(
     val tasks: List<Task>? = null
 )
 
-// TODO: commented out fields
 // TODO: dates with kotlinx.datetime
 @Keep
 @Serializable
@@ -120,7 +119,7 @@ data class Task(
     @Keep
     @Serializable
     data class Sharing(
-        val `public`: Boolean? = null,
+        val public: Boolean? = null,
         @SerialName("public_fields")
         val publicFields: List<String?>? = null,
         @SerialName("public_share_expires_on")
