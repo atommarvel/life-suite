@@ -24,18 +24,18 @@ class SecretsFetcher {
         }
     }
 
-    operator fun get(key: String): String = secretProperties[key]?.toString() ?: System.getenv(key)
+    private operator fun get(key: String): String = secretProperties[key]?.toString() ?: System.getenv(key)
 
     val clickUpClientId: String
-        get() = this["clickup.client.id"]
+        get() = this["CLICKUP_CLIENT_ID"]
     val clickUpClientSecret: String
-        get() = this["clickup.client.secret"]
+        get() = this["CLICKUP_CLIENT_SECRET"]
     val keystoreKeyAlias: String
-        get() = this["app.keystore.keyAlias"]
+        get() = this["APP_KEYSTORE_KEY_ALIAS"]
     val keystoreKeyPassword: String
-        get() = this["app.keystore.keyPassword"]
+        get() = this["APP_KEYSTORE_KEY_PASSWORD"]
     val keystoreStorePassword: String
-        get() = this["app.keystore.storePassword"]
+        get() = this["APP_KEYSTORE_STORE_PASSWORD"]
 }
 
 android {
