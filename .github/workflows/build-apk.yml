@@ -1,5 +1,8 @@
 name: Build APK
 
+on:
+  workflow_call:
+
 job:
   build-apk:
     runs-on: ubuntu-latest
