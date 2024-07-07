@@ -1,8 +1,6 @@
 # life-suite
 
 ## TODO
-- fix TODOs in code
-- get atom.fyi verified link working for keystore
 - ktlint / detekt
 - set up dependabot
 - setup jetpack glance
