@@ -1,7 +1,8 @@
 # life-suite
 
 ## TODO
-- ktlint / detekt
+- ktlint
+- detekt
 - set up dependabot
 - setup jetpack glance
 - get basic widget showing
