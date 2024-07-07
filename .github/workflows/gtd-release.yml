@@ -19,6 +19,12 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build with Gradle
+        env:
+          APP_KEYSTORE_KEY_ALIAS: ${{ secrets.APP_KEYSTORE_KEY_ALIAS }}
+          CLICKUP_CLIENT_SECRET: ${{ secrets.CLICKUP_CLIENT_SECRET }}
+          APP_KEYSTORE_KEY_PASSWORD: ${{ secrets.APP_KEYSTORE_KEY_PASSWORD }}
+          APP_KEYSTORE_STORE_PASSWORD: ${{ secrets.APP_KEYSTORE_STORE_PASSWORD }}
+          CLICKUP_CLIENT_ID: ${{ secrets.CLICKUP_CLIENT_ID }}
         run: ./gradlew :gtd:assembleDebug
       - name: Release
         uses: ncipollo/release-action@v1
