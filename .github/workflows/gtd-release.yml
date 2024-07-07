@@ -6,29 +6,23 @@ on:
       - '*'
 
 jobs:
+  build:
+    uses: ./.github/workflows/build-apk.yml
+    secrets: inherit
   release:
+    needs: build
     runs-on: ubuntu-latest
     environment: main
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up JDK
-        uses: actions/setup-java@v1
+      - uses: actions/download-artifact@v4
         with:
-          java-version: '17.0.10'
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-      - name: Build with Gradle
-        env:
-          APP_KEYSTORE_KEY_ALIAS: ${{ secrets.APP_KEYSTORE_KEY_ALIAS }}
-          CLICKUP_CLIENT_SECRET: ${{ secrets.CLICKUP_CLIENT_SECRET }}
-          APP_KEYSTORE_KEY_PASSWORD: ${{ secrets.APP_KEYSTORE_KEY_PASSWORD }}
-          APP_KEYSTORE_STORE_PASSWORD: ${{ secrets.APP_KEYSTORE_STORE_PASSWORD }}
-          CLICKUP_CLIENT_ID: ${{ secrets.CLICKUP_CLIENT_ID }}
-        run: ./gradlew :gtd:assembleDebug
+          name: artifact
+      - name: Unzip artifact
+        run: unzip ${{ github.workspace }}/artifact.zip
       - name: Release
         uses: ncipollo/release-action@v1
         with:
           draft: false
-          artifacts: ${{ github.workspace }}/gtd/build/outputs/apk/debug/gtd-debug.apk
+          artifacts: ${{ github.workspace }}/gtd-debug.apk

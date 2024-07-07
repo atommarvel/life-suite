@@ -6,13 +6,5 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    environment: main
-    steps:
-      - uses: actions/checkout@v2
-      - name: Build apk
-        uses: ./.github/workflows/build-apk.yml
-      - name: Upload apk
-        uses: actions/upload-artifact@v4.3.3
-        with:
-          path: ${{ github.workspace }}/gtd/build/outputs/apk/debug/gtd-debug.apk
+    uses: ./.github/workflows/build-apk.yml
+    secrets: inherit

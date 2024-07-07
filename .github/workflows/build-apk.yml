@@ -5,6 +5,7 @@ job:
     runs-on: ubuntu-latest
     environment: main
     steps:
+      - uses: actions/checkout@v2
       - name: Set up JDK
         uses: actions/setup-java@v1
         with:
@@ -19,3 +20,7 @@ job:
           APP_KEYSTORE_STORE_PASSWORD: ${{ secrets.APP_KEYSTORE_STORE_PASSWORD }}
           CLICKUP_CLIENT_ID: ${{ secrets.CLICKUP_CLIENT_ID }}
         run: ./gradlew :gtd:assembleDebug
+      - name: Upload apk
+        uses: actions/upload-artifact@v4.3.3
+        with:
+          path: ${{ github.workspace }}/gtd/build/outputs/apk/debug/gtd-debug.apk
