@@ -4,12 +4,13 @@ import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.jetbrains.kotlin.android)
-    alias(libs.plugins.hilt)
+    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.detekt)
-    alias(libs.plugins.ktlint)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.kotlinx.serialization)
     id("kotlin-kapt")
+    alias(libs.plugins.ktlint)
 }
 
 class SecretsFetcher {
@@ -90,9 +91,6 @@ android {
     buildFeatures {
         compose = true
         buildConfig = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
     }
     packaging {
         resources {
