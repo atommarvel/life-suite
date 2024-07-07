@@ -63,7 +63,7 @@ android {
             val secretsFetcher = SecretsFetcher()
             keyAlias = secretsFetcher.keystoreKeyAlias
             keyPassword = secretsFetcher.keystoreKeyPassword
-            storeFile = rootProject.file("life-suite.keystore")
+            storeFile = rootProject.file("life-suite.debug")
             storePassword = secretsFetcher.keystoreStorePassword
         }
     }
