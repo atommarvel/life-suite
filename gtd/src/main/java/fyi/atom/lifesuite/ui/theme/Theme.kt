@@ -94,6 +94,7 @@ private val darkScheme =
         surfaceContainerHighest = surfaceContainerHighestDark
     )
 
+@Suppress("UnusedPrivateProperty")
 private val mediumContrastLightColorScheme =
     lightColorScheme(
         primary = primaryLightMediumContrast,
@@ -133,6 +134,7 @@ private val mediumContrastLightColorScheme =
         surfaceContainerHighest = surfaceContainerHighestLightMediumContrast
     )
 
+@Suppress("UnusedPrivateProperty")
 private val highContrastLightColorScheme =
     lightColorScheme(
         primary = primaryLightHighContrast,
@@ -171,7 +173,7 @@ private val highContrastLightColorScheme =
         surfaceContainerHigh = surfaceContainerHighLightHighContrast,
         surfaceContainerHighest = surfaceContainerHighestLightHighContrast
     )
-
+@Suppress("UnusedPrivateProperty")
 private val mediumContrastDarkColorScheme =
     darkColorScheme(
         primary = primaryDarkMediumContrast,
@@ -211,6 +213,7 @@ private val mediumContrastDarkColorScheme =
         surfaceContainerHighest = surfaceContainerHighestDarkMediumContrast
     )
 
+@Suppress("UnusedPrivateProperty")
 private val highContrastDarkColorScheme =
     darkColorScheme(
         primary = primaryDarkHighContrast,

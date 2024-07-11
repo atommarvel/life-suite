@@ -23,8 +23,7 @@ class ActiveTasksWidget : GlanceAppWidget() {
         context: Context,
         id: GlanceId
     ) {
-        val appContext = context.applicationContext ?: throw IllegalStateException()
-        val widgetEntryPoint = EntryPointAccessors.fromApplication(appContext, WidgetEntryPoint::class.java)
+        val widgetEntryPoint = EntryPointAccessors.fromApplication(context.applicationContext, WidgetEntryPoint::class.java)
         val tasks =
             withContext(Dispatchers.Default) {
                 widgetEntryPoint
