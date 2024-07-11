@@ -19,14 +19,13 @@ import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 
 @Composable
-fun ActiveTasks(
-    tasks: List<TaskHod>
-) {
+fun ActiveTasks(tasks: List<TaskHod>) {
     LazyColumn(
-        modifier = GlanceModifier
-            .padding(4.dp)
-            .background(GlanceTheme.colors.surface)
-            .fillMaxSize()
+        modifier =
+            GlanceModifier
+                .padding(4.dp)
+                .background(GlanceTheme.colors.surface)
+                .fillMaxSize()
     ) {
         items(tasks, { LazyListScope.UnspecifiedItemId }) { task ->
             TaskRow(task)
@@ -47,13 +46,15 @@ fun TaskRow(
     Text(
         text = hod.name,
         style = TextStyle(color = GlanceTheme.colors.onSurface),
-        modifier = modifier
-            .padding(8.dp)
-            .clickable(actionStartActivity(taskIntent(hod.id)))
-            .fillMaxWidth()
+        modifier =
+            modifier
+                .padding(8.dp)
+                .clickable(actionStartActivity(taskIntent(hod.id)))
+                .fillMaxWidth()
     )
 }
 
-private fun taskIntent(id: String): Intent = Intent(Intent.ACTION_VIEW).apply {
-    data = "https://app.clickup.com/t/$id".toUri()
-}
+private fun taskIntent(id: String): Intent =
+    Intent(Intent.ACTION_VIEW).apply {
+        data = "https://app.clickup.com/t/$id".toUri()
+    }

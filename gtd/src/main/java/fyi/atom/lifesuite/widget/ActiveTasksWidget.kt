@@ -14,18 +14,25 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class ActiveTasksWidget : GlanceAppWidget() {
-
     @[EntryPoint InstallIn(SingletonComponent::class)]
     interface WidgetEntryPoint {
         fun fetchTasksInViewUseCase(): FetchTasksInViewUseCase
     }
 
-    override suspend fun provideGlance(context: Context, id: GlanceId) {
+    override suspend fun provideGlance(
+        context: Context,
+        id: GlanceId
+    ) {
         val appContext = context.applicationContext ?: throw IllegalStateException()
         val widgetEntryPoint = EntryPointAccessors.fromApplication(appContext, WidgetEntryPoint::class.java)
-        val tasks = withContext(Dispatchers.Default) {
-            widgetEntryPoint.fetchTasksInViewUseCase().invoke().tasks?.map { TaskHod(it.name, it.id.orEmpty()) }
-        }
+        val tasks =
+            withContext(Dispatchers.Default) {
+                widgetEntryPoint
+                    .fetchTasksInViewUseCase()
+                    .invoke()
+                    .tasks
+                    ?.map { TaskHod(it.name, it.id.orEmpty()) }
+            }
 
         provideContent {
             WidgetTheme {
