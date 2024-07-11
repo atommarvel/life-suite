@@ -1,7 +1,7 @@
 # life-suite
 
 ## TODO
-- tap item in widget to open in clickup
+- Add Prio / due date / project to widget and app
 - use workmanager to sync tasks every so often
 - add quick add task intake feature
 - add google keep integration
