@@ -1,7 +1,6 @@
 # life-suite
 
 ## TODO
-- dark theme
 - tap item in widget to open in clickup
 - use workmanager to sync tasks every so often
 - add quick add task intake feature

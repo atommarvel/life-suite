@@ -48,13 +48,13 @@ class ActiveTasksWidget : GlanceAppWidget() {
                 LazyColumn(
                     modifier = GlanceModifier
                         .padding(4.dp)
-                        .background(GlanceTheme.colors.primary)
+                        .background(GlanceTheme.colors.surface)
                         .fillMaxSize()
                 ) {
                     items(tasks.orEmpty(), { LazyListScope.UnspecifiedItemId }) { task ->
                         Text(
                             text = task,
-                            style = TextStyle(color = GlanceTheme.colors.onPrimary)
+                            style = TextStyle(color = GlanceTheme.colors.onSurface)
                         )
                     }
                 }
