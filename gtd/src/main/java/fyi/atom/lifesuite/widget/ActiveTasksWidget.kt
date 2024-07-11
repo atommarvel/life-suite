@@ -1,25 +1,9 @@
 package fyi.atom.lifesuite.widget
 
 import android.content.Context
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import androidx.glance.GlanceId
-import androidx.glance.GlanceModifier
-import androidx.glance.GlanceTheme
 import androidx.glance.appwidget.GlanceAppWidget
-import androidx.glance.appwidget.lazy.LazyColumn
-import androidx.glance.appwidget.lazy.LazyListScope
-import androidx.glance.appwidget.lazy.items
 import androidx.glance.appwidget.provideContent
-import androidx.glance.background
-import androidx.glance.color.ColorProvider
-import androidx.glance.color.ColorProviders
-import androidx.glance.layout.Column
-import androidx.glance.layout.fillMaxSize
-import androidx.glance.layout.padding
-import androidx.glance.text.Text
-import androidx.glance.text.TextDefaults
-import androidx.glance.text.TextStyle
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
@@ -40,24 +24,12 @@ class ActiveTasksWidget : GlanceAppWidget() {
         val appContext = context.applicationContext ?: throw IllegalStateException()
         val widgetEntryPoint = EntryPointAccessors.fromApplication(appContext, WidgetEntryPoint::class.java)
         val tasks = withContext(Dispatchers.Default) {
-            widgetEntryPoint.fetchTasksInViewUseCase().invoke().tasks?.map { it.name }
+            widgetEntryPoint.fetchTasksInViewUseCase().invoke().tasks?.map { TaskHod(it.name, it.id.orEmpty()) }
         }
 
         provideContent {
             WidgetTheme {
-                LazyColumn(
-                    modifier = GlanceModifier
-                        .padding(4.dp)
-                        .background(GlanceTheme.colors.surface)
-                        .fillMaxSize()
-                ) {
-                    items(tasks.orEmpty(), { LazyListScope.UnspecifiedItemId }) { task ->
-                        Text(
-                            text = task,
-                            style = TextStyle(color = GlanceTheme.colors.onSurface)
-                        )
-                    }
-                }
+                ActiveTasks(tasks.orEmpty())
             }
         }
     }
