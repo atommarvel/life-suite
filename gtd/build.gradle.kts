@@ -100,6 +100,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.glance.appwidget)
+    implementation(libs.glance.material3)
     implementation(libs.ktor.android)
     implementation(libs.ktor.core)
     implementation(libs.ktor.content.negotiation)

@@ -5,6 +5,7 @@ composeBom = "2024.06.00"
 coreKtx = "1.13.1"
 espressoCore = "3.5.1"
 flowredux = "1.2.2"
+glance = "1.1.0"
 hilt = "2.51.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -36,6 +37,8 @@ androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 appauth = "net.openid:appauth:0.11.1"
 flowredux-jvm = { module = "com.freeletics.flowredux:flowredux-jvm", version.ref = "flowredux" }
+glance-appwidget = { module = "androidx.glance:glance-appwidget", version.ref = "glance" }
+glance-material3 = { module = "androidx.glance:glance-material3", version.ref = "glance" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 hilt-navigation-compose = "androidx.hilt:hilt-navigation-compose:1.2.0"

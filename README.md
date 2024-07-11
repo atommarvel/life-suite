@@ -1,9 +1,8 @@
 # life-suite
 
 ## TODO
-- setup jetpack glance
-- get basic widget showing
-- render tasks in widget
+- dark theme
+- tap item in widget to open in clickup
 - use workmanager to sync tasks every so often
 - add quick add task intake feature
 - add google keep integration
