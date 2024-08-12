@@ -12,7 +12,7 @@ junitVersion = "1.2.1"
 kotlin = "2.0.0"
 ktor = "2.3.12"
 lifecycle = "2.8.3"
-nav = "2.8.0-beta04"
+nav = "2.8.0-beta07"
 
 [libraries]
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
