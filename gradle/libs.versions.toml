@@ -18,7 +18,7 @@ nav = "2.8.0-beta04"
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-androidx-activity-kt = "androidx.activity:activity-ktx:1.9.0"
+androidx-activity-kt = "androidx.activity:activity-ktx:1.9.2"
 androidx-datastore-preferences = "androidx.datastore:datastore-preferences:1.1.1"
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
