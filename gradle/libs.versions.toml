@@ -43,7 +43,7 @@ hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt"
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 hilt-navigation-compose = "androidx.hilt:hilt-navigation-compose:1.2.0"
 junit = { group = "junit", name = "junit", version.ref = "junit" }
-kotlinx-serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1"
+kotlinx-serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3"
 ktor-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
 ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
