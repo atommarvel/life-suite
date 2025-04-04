@@ -1,8 +1,10 @@
 package fyi.atom.lifesuite.home
 
+import PrioFlagIcon
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
@@ -55,8 +57,11 @@ fun HomeScreen(
                 }
             is HomeScreenHod.Tasks ->
                 Column {
-                    hod.titles.forEach {
-                        Text(it)
+                    hod.hods.forEach {
+                        Row {
+                            Text(it.name)
+                            PrioFlagIcon(it.prioLevel)
+                        }
                     }
                 }
             HomeScreenHod.LoggingIn -> Text(text = "Logging in...")

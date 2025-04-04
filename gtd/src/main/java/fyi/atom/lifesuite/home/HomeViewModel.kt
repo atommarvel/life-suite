@@ -1,5 +1,6 @@
 package fyi.atom.lifesuite.home
 
+import PrioLevel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.freeletics.flowredux.dsl.ChangedState
@@ -73,7 +74,9 @@ class HomeViewModel
                 state: State<HomeScreenHod.Loading>
             ): ChangedState<HomeScreenHod> =
                 if (authState != null) {
-                    val titles = fetchTasksInViewUseCase().tasks?.map { it.name }.orEmpty()
+                    val titles = fetchTasksInViewUseCase().tasks?.map {
+                        TaskRowHod(it.name, PrioLevel(it.priority))
+                    }.orEmpty()
                     state.override { HomeScreenHod.Tasks(titles) }
                 } else {
                     state.override { HomeScreenHod.LoginRequired }
@@ -93,9 +96,14 @@ sealed interface HomeScreenHod {
     data object LoggingIn : HomeScreenHod
 
     data class Tasks(
-        val titles: List<String>
+        val hods: List<TaskRowHod>
     ) : HomeScreenHod
 }
+
+data class TaskRowHod(
+    val name: String,
+    val prioLevel: PrioLevel
+)
 
 sealed interface HomeScreenAction {
     data object OnLoginClick : HomeScreenAction
