@@ -24,3 +24,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Life Suite"
 include(":gtd")
+include(":linkshift")
