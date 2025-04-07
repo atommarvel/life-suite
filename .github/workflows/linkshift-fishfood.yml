@@ -6,7 +6,5 @@ on:
 
 jobs:
   build:
-    uses: ./.github/workflows/build-apk.yml
-    with:
-      module_name: linkshift
+    uses: ./.github/workflows/linkshift-build.yml
     secrets: inherit

@@ -5,6 +5,13 @@ on:
     branches: [ main ]
 
 jobs:
-  verify-apk-compiles:
+  verify-gtd-compiles:
     uses: ./.github/workflows/build-apk.yml
     secrets: inherit
+    with:
+      module_name: gtd
+  verify-linkshift-compiles:
+    uses: ./.github/workflows/build-apk.yml
+    secrets: inherit
+    with:
+      module_name: linkshift

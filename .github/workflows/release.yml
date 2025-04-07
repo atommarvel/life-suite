@@ -6,11 +6,11 @@ on:
       - '*'
 
 jobs:
-  call-gtd-build:
+  gtd-build:
     uses: ./.github/workflows/gtd-build.yml
     secrets: inherit
 
-  call-linkshift-build:
+  linkshift-build:
     uses: ./.github/workflows/linkshift-build.yml
     secrets: inherit
 
