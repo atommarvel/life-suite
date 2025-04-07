@@ -6,6 +6,12 @@ on:
 jobs:
   build:
     uses: ./.github/workflows/build-apk.yml
+    # gtd builds expect the following secrets:
+    # - APP_KEYSTORE_KEY_ALIAS
+    # - APP_KEYSTORE_KEY_PASSWORD
+    # - APP_KEYSTORE_STORE_PASSWORD
+    # - CLICKUP_CLIENT_SECRET
+    # - CLICKUP_CLIENT_ID
     secrets: inherit
     with:
       module_name: gtd
