@@ -2,8 +2,8 @@ name: release
 
 on:
   push:
-    tags:
-      - '*'
+    branches:
+      - production
 
 jobs:
   gtd-build:
@@ -15,7 +15,7 @@ jobs:
     secrets: inherit
 
   release:
-    needs: [call-gtd-build, call-linkshift-build]
+    needs: [gtd-build, linkshift-build]
     runs-on: ubuntu-latest
     permissions:
       contents: write # Needed to create GitHub Releases
@@ -32,8 +32,37 @@ jobs:
           name: linkshift-debug.apk
           path: artifacts/linkshift
 
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history for all tags
+
+      - name: Calculate next version
+        id: tag_version
+        run: |
+          # Fetch all tags from remote
+          git fetch --tags
+
+          # Get latest tag, filter for v*, sort numerically, get highest
+          latest_tag=$(git tag --list 'v*' | sort -V | tail -n 1)
+
+          if [ -z "$latest_tag" ]; then
+            echo "Error: No previous 'v*' tags found. Cannot determine next version."
+            exit 1
+          else
+            # Increment the version number (remove 'v' prefix, increment, add 'v' back)
+            version_number=$(echo "$latest_tag" | sed 's/^v//')
+            next_version_number=$((version_number + 1))
+            next_version="v${next_version_number}"
+          fi
+
+          echo "Calculated next version: $next_version"
+          echo "tag=$next_version" >> $GITHUB_OUTPUT
+
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1
         with:
+          tag: ${{ steps.tag_version.outputs.tag }}
+          name: ${{ steps.tag_version.outputs.tag }}
           artifacts: "artifacts/**/*.apk"
           draft: false
