@@ -20,21 +20,6 @@ jobs:
     permissions:
       contents: write # Needed to create GitHub Releases
     steps:
-      - name: Download GTD APK Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: gtd-debug.apk
-          path: ${{ github.workspace }}/release_artifacts
-
-      - name: Download Linkshift APK Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: linkshift-debug.apk
-          path: ${{ github.workspace }}/release_artifacts
-
-      - name: Look around
-        run: ls -lR
-
       - name: Check out code
         uses: actions/checkout@v4
         with:
@@ -62,10 +47,22 @@ jobs:
           echo "Calculated next version: $next_version"
           echo "tag=$next_version" >> $GITHUB_OUTPUT
 
-      # - name: Create GitHub Release
-      #   uses: ncipollo/release-action@v1
-      #   with:
-      #     tag: ${{ steps.tag_version.outputs.tag }}
-      #     name: ${{ steps.tag_version.outputs.tag }}
-      #     artifacts: ${{ github.workspace }}/release_artifacts/*.apk
-      #     draft: false
+      - name: Download GTD APK Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: gtd-debug.apk
+          path: ${{ github.workspace }}/release_artifacts
+
+      - name: Download Linkshift APK Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: linkshift-debug.apk
+          path: ${{ github.workspace }}/release_artifacts
+
+      - name: Create GitHub Release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.tag_version.outputs.tag }}
+          name: ${{ steps.tag_version.outputs.tag }}
+          artifacts: ./release_artifacts/*.apk
+          draft: false
