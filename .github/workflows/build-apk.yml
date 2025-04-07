@@ -6,6 +6,17 @@ on:
       module_name:
         required: true
         type: string
+    secrets:
+      APP_KEYSTORE_KEY_ALIAS:
+        required: false
+      APP_KEYSTORE_KEY_PASSWORD:
+        required: false
+      APP_KEYSTORE_STORE_PASSWORD:
+        required: false
+      CLICKUP_CLIENT_SECRET:
+        required: false
+      CLICKUP_CLIENT_ID:
+        required: false
 jobs:
   build-apk:
     runs-on: ubuntu-latest
