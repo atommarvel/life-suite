@@ -34,12 +34,9 @@ jobs:
           echo '${{ toJson(secrets) }}' | jq -r 'to_entries | .[] | "\(.key)=\"\(.value)\""' > ci.env
           echo "Secret keys found:"
           echo '${{ toJson(secrets) }}' | jq -r 'keys_unsorted | .[]'
-      - name: Display ci.env content
-        run: cat ci.env
       - name: Build with Gradle
         run: |
-          source ci.env
-          echo "CLICKUP_CLIENT_ID in shell: $CLICKUP_CLIENT_ID"
+          export $(cat ci.env | xargs)
           ./gradlew :${{ inputs.module_name }}:assembleDebug
       - name: Upload apk
         uses: actions/upload-artifact@v4.3.3
