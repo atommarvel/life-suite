@@ -32,6 +32,9 @@ jobs:
           name: linkshift-debug.apk
           path: ${{ github.workspace }}/release_artifacts
 
+      - name: Look around
+        run: ls -lr 
+
       - name: Check out code
         uses: actions/checkout@v4
         with:
@@ -59,10 +62,10 @@ jobs:
           echo "Calculated next version: $next_version"
           echo "tag=$next_version" >> $GITHUB_OUTPUT
 
-      - name: Create GitHub Release
-        uses: ncipollo/release-action@v1
-        with:
-          tag: ${{ steps.tag_version.outputs.tag }}
-          name: ${{ steps.tag_version.outputs.tag }}
-          artifacts: ${{ github.workspace }}/release_artifacts/*.apk
-          draft: false
+      # - name: Create GitHub Release
+      #   uses: ncipollo/release-action@v1
+      #   with:
+      #     tag: ${{ steps.tag_version.outputs.tag }}
+      #     name: ${{ steps.tag_version.outputs.tag }}
+      #     artifacts: ${{ github.workspace }}/release_artifacts/*.apk
+      #     draft: false
