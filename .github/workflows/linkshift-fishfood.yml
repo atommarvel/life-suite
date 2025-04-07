@@ -1,4 +1,4 @@
-name: gtd-fishfood
+name: linkshift-fishfood
 
 on:
   push:
@@ -8,5 +8,5 @@ jobs:
   build:
     uses: ./.github/workflows/build-apk.yml
     with:
-      module_name: gtd
+      module_name: linkshift
     secrets: inherit

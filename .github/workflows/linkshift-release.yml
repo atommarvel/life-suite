@@ -1,4 +1,4 @@
-name: gtd-release
+name: linkshift-release
 
 on:
   push:
@@ -9,7 +9,7 @@ jobs:
   build:
     uses: ./.github/workflows/build-apk.yml
     with:
-      module_name: gtd
+      module_name: linkshift
     secrets: inherit
   release:
     needs: build
@@ -20,9 +20,9 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: gtd-debug.apk
+          name: linkshift-debug.apk
       - name: Release
         uses: ncipollo/release-action@v1
         with:
           draft: false
-          artifacts: ${{ github.workspace }}/gtd-debug.apk
+          artifacts: ${{ github.workspace }}/linkshift-debug.apk
