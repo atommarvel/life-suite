@@ -24,13 +24,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: gtd-debug.apk
-          path: artifacts/gtd
+          path: ${{ github.workspace }}/release-artifacts
 
       - name: Download Linkshift APK Artifact
         uses: actions/download-artifact@v4
         with:
           name: linkshift-debug.apk
-          path: artifacts/linkshift
+          path: ${{ github.workspace }}/release-artifacts
 
       - name: Check out code
         uses: actions/checkout@v4
@@ -64,5 +64,5 @@ jobs:
         with:
           tag: ${{ steps.tag_version.outputs.tag }}
           name: ${{ steps.tag_version.outputs.tag }}
-          artifacts: "artifacts/**/*.apk"
+          artifacts: ${{ github.workspace }}/release_artifacts/*.apk
           draft: false
