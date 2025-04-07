@@ -21,7 +21,8 @@ jobs:
       - name: Create environment file from secrets
         run: |
           echo '${{ toJson(secrets) }}' | jq -r 'to_entries | .[] | "\(.key)=\"\(.value)\""' > ci.env
-          cat ci.env | sed 's/=.*$/=***/' # Mask values in logs
+          echo "Secret keys found:"
+          echo '${{ toJson(secrets) }}' | jq -r 'keys_unsorted | .[]'
       - name: Build with Gradle
         run: source ci.env && ./gradlew :${{ inputs.module_name }}:assembleDebug
       - name: Upload apk
