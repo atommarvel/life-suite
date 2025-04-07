@@ -1,0 +1,39 @@
+name: release
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  call-gtd-build:
+    uses: ./.github/workflows/gtd-build.yml
+    secrets: inherit
+
+  call-linkshift-build:
+    uses: ./.github/workflows/linkshift-build.yml
+    secrets: inherit
+
+  release:
+    needs: [call-gtd-build, call-linkshift-build]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Needed to create GitHub Releases
+    steps:
+      - name: Download GTD APK Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: gtd-debug.apk
+          path: artifacts/gtd
+
+      - name: Download Linkshift APK Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: linkshift-debug.apk
+          path: artifacts/linkshift
+
+      - name: Create GitHub Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "artifacts/**/*.apk"
+          draft: false

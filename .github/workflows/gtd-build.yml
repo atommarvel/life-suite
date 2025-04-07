@@ -1,0 +1,11 @@
+name: gtd-build
+
+on:
+  workflow_call:
+
+jobs:
+  build:
+    uses: ./.github/workflows/build-apk.yml
+    with:
+      module_name: gtd
+    secrets: inherit
