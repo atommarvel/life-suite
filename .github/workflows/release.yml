@@ -33,7 +33,7 @@ jobs:
           path: ${{ github.workspace }}/release_artifacts
 
       - name: Look around
-        run: ls -lr 
+        run: ls -lR
 
       - name: Check out code
         uses: actions/checkout@v4
